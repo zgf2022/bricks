@@ -1,27 +1,29 @@
+import decimal
 import math
 import time
-import decimal
 import os
-
-def pythag ( a , b):
-  face = decimal.Decimal((a * a) + (b * b))
-  face = face.sqrt()
-  return face
-
-def checktriangle(a, v1, v2 ):
-  if a %1 == 0:
-          file = open('2.txt', 'a')
-          file.write('\n')
-          file.write(str(v1) + ", " + str(v2))
-          file.close()
-
+import random
+import bricks
 decimal.getcontext().prec = 50
-print ("x offset ")
-xoffset = int(input())
-print ("y offset ")
-yoffset = int(input())
-print ("z offset ")
-zoffset = int(input())
+
+print ("mode 1/targeted 2/ random")
+modeswitch = int(input())
+
+if modeswitch == 1:
+  print ("x offset ")
+  xoffset = int(input())
+  print ("y offset ")
+  yoffset = int(input())
+  print ("z offset ")
+  zoffset = int(input())
+
+if modeswitch ==2:
+  print ("ranom high limit")
+  randlimit = int(input())
+  xoffset = random.randint(1,randlimit)
+  yoffset = random.randint(1,randlimit)
+  zoffset = random.randint(1,randlimit)  
+
 print ("z runsize ")
 runsize = int(input())
 
@@ -44,6 +46,10 @@ totalboxes = 0
 
 while True:
   runcount += runsize
+  if modeswitch == 2:
+    xoffset = random.randint(1,randlimit)
+    yoffset = random.randint(1,randlimit)
+    zoffset = random.randint(1,randlimit)
   x = xoffset
   while x < runcount + xoffset:
     x += 1
@@ -59,13 +65,13 @@ while True:
         totalboxes += 1
         z += 1
         
-        face1 = pythag(x, y)
-        face2 = pythag(x,z)
-        face3 = pythag(y,z)
+        face1 = bricks.pythag(x, y)
+        face2 = bricks.pythag(x,z)
+        face3 = bricks.pythag(y,z)
         
-        checktriangle(face1, x, y)
-        checktriangle(face2, x, z)
-        checktriangle(face3, y, z)
+        bricks.checktriangle(face1, x, y)
+        bricks.checktriangle(face2, x, z)
+        bricks.checktriangle(face3, y, z)
         
         if face1 %1 == 0 and face2 %1 == 0 and face3 %1 == 0:
           file = open('brick.txt', 'a')
@@ -82,8 +88,3 @@ while True:
             file.write('\n')
             file.write('x: ' + str(x)+ " y: " + str(y) + " z:  " + str(z))
             file.close()
-        
-          
-      
-
-
