@@ -3,7 +3,19 @@ import time
 import decimal
 import os
 
-decimal.getcontext().prec = 200
+def pythag ( a , b):
+  face = decimal.Decimal((a * a) + (b * b))
+  face = face.sqrt()
+  return face
+
+def checktriangle(a, v1, v2 ):
+  if a %1 == 0:
+          file = open('2.txt', 'a')
+          file.write('\n')
+          file.write(str(v1) + ", " + str(v2))
+          file.close()
+
+decimal.getcontext().prec = 50
 print ("x offset ")
 xoffset = int(input())
 print ("y offset ")
@@ -39,34 +51,22 @@ while True:
     while y < runcount + yoffset:
       y += 1
       z = zoffset
-      os.system('cls')
+      #os.system('cls')
       print ("boxes: " + str(totalboxes) + " Euler Bricks found: " + str(eulerfound) + " Perfect Cuboids found: " + str(perfectfound))
       print ("X: " + str(x) + " y: " + str(y) + " z: " + str(z))
         
       while z < runsize + zoffset:
         totalboxes += 1
         z += 1
-        face1 = decimal.Decimal((x * x) + (y * y))
-        face1 = face1.sqrt()
-        face2 = decimal.Decimal((x * x) + (z * z))
-        face2 = face2.sqrt()
-        face3 = decimal.Decimal((y * y) + (z * z))
-        face3 = face3.sqrt()
-        if face1 %1 == 0:
-          file = open('face1.txt', 'a')
-          file.write('\n')
-          file.write('x: ' + str(x)+ " y: " + str(y))
-          file.close()
-        if face2 %1 == 0:
-          file = open('face2.txt', 'a')
-          file.write('\n')
-          file.write('x: ' + str(x)+ " z: " + str(z))
-          file.close()
-        if face3 %1 == 0:
-          file = open('face3.txt', 'a')
-          file.write('\n')
-          file.write('y: ' + str(y)+ " z: " + str(z))
-          file.close()
+        
+        face1 = pythag(x, y)
+        face2 = pythag(x,z)
+        face3 = pythag(y,z)
+        
+        checktriangle(face1, x, y)
+        checktriangle(face2, x, z)
+        checktriangle(face3, y, z)
+        
         if face1 %1 == 0 and face2 %1 == 0 and face3 %1 == 0:
           file = open('brick.txt', 'a')
           file.write('\n')
